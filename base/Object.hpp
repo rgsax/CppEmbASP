@@ -21,7 +21,7 @@ public:
 
 	virtual void initObject(std::vector<std::string> predicateArguments) = 0;
 
-	virtual std::vector<std::string> listArguments() = 0;
+	virtual std::vector<std::string> listArguments() { return std::vector<std::string>(); };
 
 	virtual ~Object() { }
 

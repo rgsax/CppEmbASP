@@ -120,7 +120,7 @@ protected:
 	std::string programs = "";
 
 	/* used as separator for programs */
-    std::string separator;
+    std::string separator = "";
 
 private:
     /* where associated files are stored */

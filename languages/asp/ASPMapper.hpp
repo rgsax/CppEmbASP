@@ -69,17 +69,21 @@ public:
 		if(!isRegistered(object))
 			registerObjectType(object);
 
-		std::string objString = object->getName() + '(';
-		std::vector<std::string> argumentList = object->listArguments();
-		for(const auto &arg : argumentList) {
-			objString += arg + ',';
-		}
+		std::string objString = object->getName();
 
-		size_t lastPos = objString.length() - 1;
-		if(objString[lastPos] == ',')
-			objString[lastPos] = ')';
-		else
-			objString += ')';
+		std::vector<std::string> argumentList = object->listArguments();
+		if(!argumentList.empty()) {
+			objString += '(';
+			for(const auto &arg : argumentList) {
+				objString += arg + ',';
+			}
+
+			size_t lastPos = objString.length() - 1;
+			if(objString[lastPos] == ',')
+				objString[lastPos] = ')';
+			else
+				objString += ')';
+		}
 
 		return objString;
 	}

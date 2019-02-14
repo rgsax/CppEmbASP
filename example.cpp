@@ -5,69 +5,81 @@
 using namespace std;
 using namespace embasp;
 
-class Pesca : public Object {
+class Example : public Object {
 public:
-	Pesca(): Object("pesca") {
-		initObject();
-	}
-
-	Pesca(int value): Object("pesca"), value(value) {
+	Example(): Object("embaspFunziona") {
 		initObject();
 	}
 
 	void initObject(vector<string> predicateArguments) override {
-		value = stoi(predicateArguments[0]);
+		initObject();
+	}
+
+	string toString() {
+		return "Example class";
+	}
+
+protected:
+	void initObject() override { }
+} ;
+
+class ExitCode : public Object {
+public:
+	ExitCode(int code = 0): Object("exit_code"), code(code) { }
+
+	void initObject(vector<string> args) override final {
+		code = stoi(args[0]);
 
 		initObject();
 	}
 
 	vector<string> listArguments() override {
 		return vector<string> {
-			to_string(getArgument<int>(0))
+			to_string(code)
 		};
 	}
 
 	string toString() {
-		return "Pesca{" + to_string(value) + "}";
+		return "ExitCode{" + to_string(code) + "}";
 	}
 
 protected:
-	void initObject() override {
-		addArgument<int>(0, &value);
+	void initObject() override final {
+		addArgument<int>(0, &code);
 	}
 
 private:
-	int value;
-} ;
+	int code;
+
+};
 
 int main() {
-	ASPMapper::getInstance()->registerObjectType<Pesca>();
 
     DesktopHandler handler(new DLV2DesktopService("./dlv2"));
-	//InputProgram *program = new InputProgram("banana(X) | pesca(X):- pera(X). pera(1). :~ banana(X). [1@1, X] :~ banana(X). [1@2, X]");
 	InputProgram *program = new ASPInputProgram();
-	program->addFilesPath("file_dlv");
-	program->addObjectInput(new Pesca(237));
+
+	program->addFilesPath("prova");
+	program->addObjectInput(new ExitCode(0));
+	program->addProgram("exit_code(1).");
 	handler.addProgram(program);
+
+	ASPMapper::getInstance()->registerObjectType<Example>();
+
 	Output *output = handler.startSync();
 	AnswerSets *answerSets = dynamic_cast<AnswerSets*>(output);
 
 	for(auto answerSet : answerSets->getAnswersets()) {
-		// for(ObjectInfo objInfo : answerSet->getAtoms()) {
-		// 	const type_info *tInfo = objInfo.getObjectTypeInfo();
-		// 	if(tInfo != nullptr && tInfo->name() == typeid(Pesca).name()) {
-		// 		Pesca p;
-		// 		p.initObject(objInfo.getPredicateArguments());
-		// 		cout<<p.toString()<<"\n";
-		// 	}
-		// }
+		for(auto atom : answerSet->getAtoms()) {
+			const type_info *tInfo = atom.getObjectTypeInfo();
+			if(tInfo != nullptr)
+				if(tInfo->name() == typeid(Example).name())
+					cout<<"Embasp funziona!\n";
 
-		for(string as : answerSet->getAnswerSet())
-			cout<<as<<"\n";
-
-		for(auto &[level, cost] : answerSet->getLevelWeight()) {
-			cout<<cost<<"@"<<level<<" ";
+				if(tInfo->name() == typeid(ExitCode).name()) {
+					ExitCode ec;
+					ec.initObject(atom.getPredicateArguments());
+					cout<<ec.toString()<<"\n";
+				}
 		}
-		cout<<"\n";
 	}
 }

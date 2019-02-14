@@ -35,7 +35,7 @@ protected:
 		while (matcher_it != std::sregex_iterator()) {
             std::smatch matcher = *matcher_it;
 
-			std::regex patternAnswerSet(R"((-?[a-z][A-Za-z0-9_]*(\(.*?\)))\.\s*?(\\n)?)");//c++ does not support multiline regexp[c++17 has multiline support, but it is not implemented yet]
+			std::regex patternAnswerSet(R"((-?[a-z][A-Za-z0-9_]*(\(.*?\))?)\.\s*?(\\n)?)");//c++ does not support multiline regexp[c++17 has multiline support, but it is not implemented yet]
 			std::string matchedAnswerset = matcher.str(1);
 
 			std::sregex_iterator matcherAnswerSet_it(matchedAnswerset.begin(), matchedAnswerset.end(), patternAnswerSet);

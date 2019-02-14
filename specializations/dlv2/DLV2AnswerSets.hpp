@@ -1,5 +1,5 @@
-#include "../languages/asp/AnswerSets.hpp"
-#include "../languages/asp/AnswerSet.hpp"
+#include "../../languages/asp/AnswerSets.hpp"
+#include "../../languages/asp/AnswerSet.hpp"
 #include <regex>
 
 namespace embasp {

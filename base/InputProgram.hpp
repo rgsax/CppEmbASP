@@ -1,12 +1,11 @@
 #include <list>
 #include <string>
+#include "Object.hpp"
 
 namespace embasp {
 
 #ifndef INPUTPROGRAM_H
 #define INPUTPROGRAM_H
-
-class Object;
 
 /* Represents a generic option */
 class InputProgram

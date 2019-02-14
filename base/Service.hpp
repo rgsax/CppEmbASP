@@ -1,14 +1,13 @@
 #include <list>
+#include "Callback.hpp"
+#include "InputProgram.hpp"
+#include "OptionDescriptor.hpp"
+#include "Output.hpp"
 
 namespace embasp {
 
 #ifndef SERVICE_H
 #define SERVICE_H
-
-class Callback;
-class InputProgram;
-class OptionDescriptor;
-class Output;
 
 class Service
 {

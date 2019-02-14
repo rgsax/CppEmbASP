@@ -1,19 +1,5 @@
-#include "base/Callback.hpp"
-#include "base/Output.hpp"
-#include "base/Service.hpp"
-#include "base/OptionDescriptor.hpp"
-#include "base/InputProgram.hpp"
-#include "base/Handler.hpp"
-#include "languages/asp/AnswerSet.hpp"
-#include "languages/asp/AnswerSets.hpp"
-#include "languages/asp/ASPFilterOption.hpp"
-#include "languages/asp/ASPInputProgram.hpp"
 #include "platforms/desktop/DesktopHandler.hpp"
-#include "platforms/desktop/DesktopService.hpp"
-#include "specializations/DLV2AnswerSets.hpp"
-#include "specializations/dlv2/DLV2DesktopService.hpp"
-#include "languages/asp/SymbolicConstant.hpp"
-
+#include "specializations/dlv2.hpp"
 #include <iostream>
 
 using namespace std;

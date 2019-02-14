@@ -1,5 +1,5 @@
-#include "../../platforms/desktop/DesktopService.hpp"
-#include "../../base/OptionDescriptor.hpp"
+#include "../../../platforms/desktop/DesktopService.hpp"
+#include "../../../base/OptionDescriptor.hpp"
 #include "../DLV2AnswerSets.hpp"
 
 namespace embasp {

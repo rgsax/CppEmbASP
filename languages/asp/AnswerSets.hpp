@@ -1,13 +1,12 @@
 #include <list>
 #include <string>
 #include "../../base/Output.hpp"
+#include "AnswerSet.hpp"
 
 namespace embasp {
 
 #ifndef ANSWERSETS_H
 #define ANSWERSETS_H
-
-class AnswerSet;
 
 /* A collection of AnswerSet */
 class AnswerSets : public Output

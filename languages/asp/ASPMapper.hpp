@@ -1,6 +1,5 @@
 #include <exception>
-#include "../../base/Object.hpp"
-#include "../../base/ObjectInfo.hpp"
+#include "../../base/Type.hpp"
 
 namespace embasp {
 
@@ -18,25 +17,26 @@ public:
 		return instance;
 	}
 
-	void registerObjectType(Object *object) {
-		registeredTypes.insert_or_assign(object->getName(), &typeid(*object));
-	}
-
 	template<typename T>
 	void registerObjectType() {
-		T *tmp = new T();
-		registerObjectType(tmp);
-		delete tmp;
+		_Type *type = new Type<T>;
+		Object *obj = type->newInstance();
+
+		registeredTypes.insert_or_assign(obj->getName(), type);
+
+		delete obj;
 	}
 
-	ObjectInfo getObjectDescription(std::string predicate) {
+	Object* getObject(std::string predicate) {
 		std::string name = predicate.substr(0, predicate.find("("));
 
-		const std::type_info *tInfo = nullptr;
+		_Type *type = nullptr;
 
 		try{
-			tInfo = registeredTypes.at(name);
-		} catch(const std::exception &e) { }
+			type = registeredTypes.at(name);
+		} catch(const std::exception &e) {
+			return nullptr;
+		}
 
 		std::string arguments = predicate.substr(predicate.find("(") + 1, predicate.length() - 1);
 		std::vector<std::string> args;
@@ -50,25 +50,40 @@ public:
 
 		args.push_back(arguments);
 
-		return ObjectInfo(tInfo, args);
+		Object *obj = type->newInstance();
+		obj->initObject(args);
+
+		return obj;
 	}
 
-	std::unordered_map<std::string, const std::type_info*> getRegisteredTypes() {
+	std::unordered_map<std::string, _Type*> getRegisteredTypes() {
 		return registeredTypes;
 	}
 
-	void unregisterObjectType(Object *object) {
-		registeredTypes.erase(object->getName());
+	template<typename T>
+	void unregisterObjectType() {
+		_Type *type = new Type<T>;
+		Object *obj = type->newInstance();
+
+		registeredTypes.erase(obj->getName());
+
+		delete obj;
+		delete type;
 	}
 
-	bool isRegistered(Object *object) {
-		return registeredTypes.find(object->getName()) != registeredTypes.end();
+	template<typename T>
+	bool isRegistered() {
+		_Type *type = new Type<T>;
+		Object *obj = type->newInstance();
+
+		bool registered = registeredTypes.find(obj->getName()) != registeredTypes.end();
+
+		delete obj;
+		delete type;
+		return registered;
 	}
 
 	std::string getString(Object *object) {
-		if(!isRegistered(object))
-			registerObjectType(object);
-
 		std::string objString = object->getName();
 
 		std::vector<std::string> argumentList = object->listArguments();
@@ -90,8 +105,7 @@ public:
 
 private:
 	static ASPMapper *instance;
-	std::unordered_map<std::string, const std::type_info*> registeredTypes;
-
+	std::unordered_map<std::string, _Type*> registeredTypes;
 };
 
 ASPMapper* ASPMapper::instance = nullptr;

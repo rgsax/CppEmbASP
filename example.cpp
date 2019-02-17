@@ -64,22 +64,19 @@ int main() {
 	handler.addProgram(program);
 
 	ASPMapper::getInstance()->registerObjectType<Example>();
+	ASPMapper::getInstance()->registerObjectType<ExitCode>();
 
 	Output *output = handler.startSync();
 	AnswerSets *answerSets = dynamic_cast<AnswerSets*>(output);
 
 	for(auto answerSet : answerSets->getAnswersets()) {
 		for(auto atom : answerSet->getAtoms()) {
-			const type_info *tInfo = atom.getObjectTypeInfo();
-			if(tInfo != nullptr)
-				if(tInfo->name() == typeid(Example).name())
-					cout<<"Embasp funziona!\n";
-
-				if(tInfo->name() == typeid(ExitCode).name()) {
-					ExitCode ec;
-					ec.initObject(atom.getPredicateArguments());
-					cout<<ec.toString()<<"\n";
-				}
+			if(atom != nullptr) {
+				if(typeid(*atom) == typeid(Example))
+					cout<<"embasp funziona!!\n";
+				else if(typeid(*atom) == typeid(ExitCode))
+					cout<<dynamic_cast<ExitCode*>(atom)->toString()<<"\n";
+			}
 		}
 	}
 }

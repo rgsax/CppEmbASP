@@ -1,3 +1,0 @@
-embaspFunziona :- exit_code(0).
-
-%:- embaspFunziona, exit_code(X), X != 0.

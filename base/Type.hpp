@@ -1,4 +1,4 @@
-#include "Object.hpp"
+#include "Predicate.hpp"
 
 namespace embasp {
 
@@ -7,7 +7,7 @@ namespace embasp {
 
 class _Type {
 public:
-	virtual Object* newInstance() const {
+	virtual Predicate* newInstance() const {
 		return nullptr;
 	}
 };
@@ -16,7 +16,7 @@ template<typename T>
 class Type : public _Type{
 
 public:
-	Object* newInstance() const override {
+	Predicate* newInstance() const override {
 		return new T();
 	}
 };

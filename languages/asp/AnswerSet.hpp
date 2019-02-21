@@ -36,11 +36,11 @@ public:
 	/*
 	 * Return atoms stored in atoms
 	 */
-	std::list<Object*> getAtoms() {
+	std::list<Predicate*> getAtoms() {
 		if (atoms.empty()) {
 			ASPMapper *mapper = ASPMapper::getInstance();
 			for (const std::string &atom : value) {
-				Object *obj = mapper->getObject(atom);
+				Predicate *obj = mapper->getPredicate(atom);
 
 				atoms.push_back(obj);
 			}
@@ -74,7 +74,7 @@ private:
 	/* where weights of the answer set are stored */
 	std::unordered_map<int, int> weight_map;
 	/* where Answer set's atoms are stored */
-    std::list<Object*> atoms;
+    std::list<Predicate*> atoms;
 };
 
 #endif // ANSWERSET_H

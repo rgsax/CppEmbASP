@@ -5,14 +5,14 @@
 using namespace std;
 using namespace embasp;
 
-class Example : public Object {
+class Example : public Predicate {
 public:
-	Example(): Object("embaspFunziona") {
-		initObject();
+	Example(): Predicate("embaspFunziona") {
+		initPredicate();
 	}
 
-	void initObject(vector<string> predicateArguments) override {
-		initObject();
+	void initPredicate(vector<string> predicateArguments) override {
+		initPredicate();
 	}
 
 	string toString() {
@@ -20,17 +20,17 @@ public:
 	}
 
 protected:
-	void initObject() override { }
+	void initPredicate() override { }
 } ;
 
-class ExitCode : public Object {
+class ExitCode : public Predicate {
 public:
-	ExitCode(int code = 0): Object("exit_code"), code(code) { }
+	ExitCode(int code = 0): Predicate("exit_code"), code(code) { }
 
-	void initObject(vector<string> args) override final {
+	void initPredicate(vector<string> args) override final {
 		code = stoi(args[0]);
 
-		initObject();
+		initPredicate();
 	}
 
 	vector<string> listArguments() override {
@@ -44,7 +44,7 @@ public:
 	}
 
 protected:
-	void initObject() override final {
+	void initPredicate() override final {
 		addArgument<int>(0, &code);
 	}
 
@@ -59,12 +59,12 @@ int main() {
 	InputProgram *program = new ASPInputProgram();
 
 	program->addFilesPath("prova");
-	program->addObjectInput(new ExitCode(0));
+	program->addPredicateInput(new ExitCode(0));
 	program->addProgram("exit_code(1).");
 	handler.addProgram(program);
 
-	ASPMapper::getInstance()->registerObjectType<Example>();
-	ASPMapper::getInstance()->registerObjectType<ExitCode>();
+	ASPMapper::getInstance()->registerPredicateType<Example>();
+	ASPMapper::getInstance()->registerPredicateType<ExitCode>();
 
 	Output *output = handler.startSync();
 	AnswerSets *answerSets = dynamic_cast<AnswerSets*>(output);

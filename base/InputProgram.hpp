@@ -1,6 +1,6 @@
 #include <list>
 #include <string>
-#include "Object.hpp"
+#include "Predicate.hpp"
 
 namespace embasp {
 
@@ -19,8 +19,8 @@ public:
     /*
 	 * instantiate a new InputProgram
 	 */
-   InputProgram(Object *inputObj) {
-		addObjectInput(inputObj);
+   InputProgram(Predicate *inputObj) {
+		addPredicateInput(inputObj);
    }
 
     InputProgram(const std::string &initial_program) {
@@ -34,11 +34,11 @@ public:
 		files_paths.push_back(file_path);
     }
 
-	virtual void addObjectInput(Object *inputObj) {	}
+	virtual void addPredicateInput(Predicate *inputObj) {	}
 
-	void addObjectsInput(const std::list<Object*> &inputObjs) {
-		for (Object *inputObj : inputObjs)
-			addObjectInput(inputObj);
+	void addPredicatesInput(const std::list<Predicate*> &inputObjs) {
+		for (Predicate *inputObj : inputObjs)
+			addPredicateInput(inputObj);
 	}
 
     /*

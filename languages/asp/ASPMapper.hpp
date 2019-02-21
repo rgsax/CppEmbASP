@@ -18,16 +18,16 @@ public:
 	}
 
 	template<typename T>
-	void registerObjectType() {
+	void registerPredicateType() {
 		_Type *type = new Type<T>;
-		Object *obj = type->newInstance();
+		Predicate *obj = type->newInstance();
 
 		registeredTypes.insert_or_assign(obj->getName(), type);
 
 		delete obj;
 	}
 
-	Object* getObject(std::string predicate) {
+	Predicate* getPredicate(std::string predicate) {
 		std::string name = predicate.substr(0, predicate.find("("));
 
 		_Type *type = nullptr;
@@ -50,8 +50,8 @@ public:
 
 		args.push_back(arguments);
 
-		Object *obj = type->newInstance();
-		obj->initObject(args);
+		Predicate *obj = type->newInstance();
+		obj->initPredicate(args);
 
 		return obj;
 	}
@@ -61,9 +61,9 @@ public:
 	}
 
 	template<typename T>
-	void unregisterObjectType() {
+	void unregisterPredicateType() {
 		_Type *type = new Type<T>;
-		Object *obj = type->newInstance();
+		Predicate *obj = type->newInstance();
 
 		registeredTypes.erase(obj->getName());
 
@@ -74,7 +74,7 @@ public:
 	template<typename T>
 	bool isRegistered() {
 		_Type *type = new Type<T>;
-		Object *obj = type->newInstance();
+		Predicate *obj = type->newInstance();
 
 		bool registered = registeredTypes.find(obj->getName()) != registeredTypes.end();
 
@@ -83,10 +83,10 @@ public:
 		return registered;
 	}
 
-	std::string getString(Object *object) {
-		std::string objString = object->getName();
+	std::string getString(Predicate *predicate) {
+		std::string objString = predicate->getName();
 
-		std::vector<std::string> argumentList = object->listArguments();
+		std::vector<std::string> argumentList = predicate->listArguments();
 		if(!argumentList.empty()) {
 			objString += '(';
 			for(const auto &arg : argumentList) {

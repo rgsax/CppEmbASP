@@ -14,15 +14,15 @@ public:
 
     ASPInputProgram(): InputProgram() {	}
 
-	ASPInputProgram(Predicate *inputObj): InputProgram(inputObj) {	}
+	ASPInputProgram(Predicate *inputPred): InputProgram(inputPred) {	}
 
 	ASPInputProgram(const std::string &initial_program): InputProgram(initial_program) { }
 
     /**
 	 * transforms a given Predicate class into a InputProgram and adds it to the current programs
 	 */
-	void addPredicateInput(Predicate *inputObj) override {
-		addProgram(ASPMapper::getInstance()->getString(inputObj) + ".");
+	void addPredicateInput(Predicate *inputPred) override {
+		addProgram(ASPMapper::getInstance()->getString(inputPred) + ".");
 	}
 
 };

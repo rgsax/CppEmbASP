@@ -15,12 +15,12 @@ public:
     /*
 	 * Starts ASP solving Asyncronously on a subset of data and options.
 	 */
-    virtual void startAsync(Callback *callback, std::list<InputProgram*> programs, std::list<OptionDescriptor*> options) = 0;
+    virtual void startAsync(Callback *callback, const std::list<InputProgram*> &programs, const std::list<OptionDescriptor*> &options) = 0;
 
     /*
 	 * Starts ASP solving Syncronously on a subset of data and options.
 	 */
-    virtual Output* startSync(std::list<InputProgram*> programs, std::list<OptionDescriptor*> options) = 0;
+    virtual Output* startSync(const std::list<InputProgram*> &programs, const std::list<OptionDescriptor*> &options) = 0;
 
     virtual ~Service() {}
 };

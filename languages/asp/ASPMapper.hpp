@@ -27,7 +27,7 @@ public:
 		delete obj;
 	}
 
-	Predicate* getPredicate(std::string predicate) {
+	Predicate* getPredicate(const std::string &predicate) {
 		std::string name = predicate.substr(0, predicate.find("("));
 
 		_Type *type = nullptr;

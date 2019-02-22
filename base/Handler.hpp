@@ -10,7 +10,9 @@ namespace embasp {
 
 /*
  * A collection of InputProgram and OptionDescriptor.
- * The subclasses have to implement startAsync(Callback*, list, list)and startSync(list, list) methods.
+ * The subclasses have to implement
+ * startAsync(Callback*, const std::list<int>&, const std::list<int>&)
+ * and startSync(const std::list<int>&, const std::list<int>&) methods.
  * Each instance inside programs and options are represented by an integer (id) , respectively.
  */
 class Handler
@@ -18,7 +20,7 @@ class Handler
 public:
 
     /*
-	 * Add a new element inside {@link #options} set.
+	 * Add a new element inside options list.
 	 */
     int addOption(OptionDescriptor *o) {
 		int last_index = options.size();
@@ -28,7 +30,7 @@ public:
     }
 
     /*
-	 * Add a new element inside programs set.
+	 * Add a new element inside programs list.
 	 */
     int addProgram(InputProgram *program) {
 		int last_index = programs.size();
@@ -58,14 +60,14 @@ public:
     }
 
     /*
-	 * Removes the element associate within the given id from options set.
+	 * Removes the element associate within the given id from options list.
 	 */
     void removeOption(int option_id) {
 		options.erase(option_id);
     }
 
     /*
-	 * Removes every occurrence of a specified OptionDescriptor element from options set.
+	 * Removes every occurrence of a specified OptionDescriptor element from options list.
 	 */
     bool removeOption(OptionDescriptor *o) {
 		bool result = false;
@@ -79,7 +81,7 @@ public:
     }
 
     /*
-	 * Removes every occurrence of a specified InputProgram element from programs set.
+	 * Removes every occurrence of a specified InputProgram element from programs list.
 	 */
     bool removeProgram(InputProgram *p) {
 		bool result = false;
@@ -92,31 +94,31 @@ public:
     }
 
     /*
-	 * Removes the element associate within the given id from programs set.
+	 * Removes the element associate within the given id from programs list.
 	 */
     void removeProgram(int program_id) {
 		programs.erase(program_id);
     }
 
-    void startAsync(Callback *c) {
+    virtual void startAsync(Callback *c) {
 		startAsync(c, std::list<int>(), std::list<int>());
     }
 
     /*
 	 * This method have to be implemented by subclasses to execute solver in a asynchronous way, if no parameters are given
-	 * the entire sets of programs and option are used
+	 * the entire lists of programs and option are used
 	 */
-	virtual void startAsync(Callback *c, std::list<int> program_index, std::list<int> option_index) { }
+	virtual void startAsync(Callback *c, const std::list<int> &program_index, const std::list<int> &option_index) { }
 
-	Output* startSync() {
+	virtual Output* startSync() {
 		return startSync(std::list<int>(), std::list<int>());
     }
 
     /**
 	 * This method have to be implemented by subclasses to execute solver in a synchronous way, if no parameters are given
-	 * the entire sets of programs and option are used
+	 * the entire lists of programs and option are used
 	 */
-	virtual Output* startSync(std::list<int> program_index, std::list<int> option_index) {
+	virtual Output* startSync(const std::list<int> &program_index, const std::list<int> &option_index) {
 		return nullptr;
     }
 

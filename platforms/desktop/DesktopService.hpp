@@ -35,17 +35,16 @@ public:
 	/**
 	 * Start a new process for the exe_path and starts solving
 	 */
-	void startAsync(Callback *callback, std::list<InputProgram*> programs, std::list<OptionDescriptor*> options) override{
-
+	void startAsync(Callback *callback, const std::list<InputProgram*> &programs, const std::list<OptionDescriptor*> &options) override{
         std::thread(
-            [&]{ callback->callback(startSync(programs, options)); }
+            [&](){ callback->callback(this->startSync(programs, options)); }
         ).join();
     }
 
     /**
-	 * Start a new process for the {@link #exe_path} and starts solving
+	 * Start a new process for the exe_path and starts solving
 	 */
-	Output* startSync(std::list<InputProgram*> programs, std::list<OptionDescriptor*> options) override{
+	Output* startSync(const std::list<InputProgram*> &programs, const std::list<OptionDescriptor*> &options) override{
 		std::string option;
 
 		for (OptionDescriptor *o : options)
@@ -91,64 +90,9 @@ public:
         std::cerr<<stringBuffer<<"\n";
         CmdExecutor *executor = CmdExecutor::getInstance();
         executor->execute(stringBuffer);
-/*
-        Thread threadOutput=new Thread() {
-            @Override
-            public void run() {
-                try {
 
-                    final BufferedReader bufferedReaderOutput = new BufferedReader(new InputStreamReader(solver_process.getInputStream()));
-
-                    // Read output of the solver and store in solverOutput
-                    String currentLine;
-                    while ((currentLine = bufferedReaderOutput.readLine()) != null)
-                        solverOutput.append(currentLine + "\n");
-                } catch (final IOException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        };
-        threadOutput.start();
-        threadOutput.join();
-*/
         solverOutput<<executor->getOutputStream()->rdbuf();
-
-/*
-        Thread threadError = new Thread() {
-            @Override
-            public void run() {
-                try {
-
-                    final BufferedReader bufferedReaderError = new BufferedReader(new InputStreamReader(solver_process.getErrorStream()));
-
-                    String currentErrLine;
-                    while ((currentErrLine = bufferedReaderError.readLine()) != null)
-                        solverError.append(currentErrLine + "\n");
-
-                } catch (final IOException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        };
-        threadError.start();
-        threadError.join();
-*/
-
         solverError<<executor->getErrorOutputStream()->rdbuf();
-/*
-        final PrintWriter writer = new PrintWriter(solver_process.getOutputStream());
-        writer.println(final_program);
-        if (writer != null)
-            writer.close();
-*/
-        //solver_process.waitFor();
-
-        //final long stopTime = System.nanoTime();
-        //System.err.println("Total time : " + (stopTime - startTime));
-
-        //if(tmpFile!=null) tmpFile.delete();
 
         return getOutput(solverOutput.str(), solverError.str());
     }
@@ -159,9 +103,9 @@ protected:
     std::string exe_path;
     std::string load_from_STDIN_option;
 
-    virtual Output* getOutput(std::string output, std::string error) = 0;
+    virtual Output* getOutput(const std::string &output, const std::string &error) = 0;
 
-    std::string writeToFile(std::string pFilename, std::string sb) {
+    std::string writeToFile(const std::string &pFilename, const std::string &sb) {
 	    std::string tmpDir = boost::filesystem::temp_directory_path().string();
 	    std::string tempFile = tmpDir + "/" + pFilename;
 	    std::ofstream out(tempFile);

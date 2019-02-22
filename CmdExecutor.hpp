@@ -19,7 +19,7 @@ public:
 		return instance;
 	}
 
-	int execute(std::string command) {
+	int execute(const std::string &command) {
 		boost_process::ipstream *out = new boost_process::ipstream;
 		boost_process::ipstream *err = new boost_process::ipstream;
 

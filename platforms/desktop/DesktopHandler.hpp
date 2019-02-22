@@ -14,18 +14,22 @@ class DesktopHandler : public Handler
 public:
     DesktopHandler(DesktopService *service): service(service) { }
 
-    void startAsync(Callback *c, std::list<int> program_index, std::list<int> option_index) override{
+    void startAsync(Callback *c, const std::list<int> &program_index, const std::list<int> &option_index) override{
         std::list<InputProgram*> input_programs = collect_programs(program_index);
         std::list<OptionDescriptor*> input_options = collect_options(option_index);
 
         service->startAsync(c, input_programs, input_options);
     }
 
-	Output* startSync() {
+	void startAsync(Callback *c) override {
+		startAsync(c, std::list<int>(), std::list<int>());
+	}
+
+	Output* startSync() override {
 		return Handler::startSync();
 	}
 
-    Output* startSync(std::list<int> program_index, std::list<int> option_index) override{
+    Output* startSync(const std::list<int> &program_index, const std::list<int> &option_index) override{
 		std::list<InputProgram*> input_programs = collect_programs(program_index);
 		std::list<OptionDescriptor*> input_options = collect_options(option_index);
 

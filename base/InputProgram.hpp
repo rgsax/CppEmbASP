@@ -7,7 +7,7 @@ namespace embasp {
 #ifndef INPUTPROGRAM_H
 #define INPUTPROGRAM_H
 
-/* Represents a generic option */
+/* Represents a generic input program */
 class InputProgram
 {
 public:
@@ -19,8 +19,8 @@ public:
     /*
 	 * instantiate a new InputProgram
 	 */
-   InputProgram(Predicate *inputObj) {
-		addPredicateInput(inputObj);
+   InputProgram(Predicate *inputPred) {
+		addPredicateInput(inputPred);
    }
 
     InputProgram(const std::string &initial_program) {
@@ -34,11 +34,11 @@ public:
 		files_paths.push_back(file_path);
     }
 
-	virtual void addPredicateInput(Predicate *inputObj) {	}
+	virtual void addPredicateInput(Predicate *inputPred) {	}
 
-	void addPredicatesInput(const std::list<Predicate*> &inputObjs) {
-		for (Predicate *inputObj : inputObjs)
-			addPredicateInput(inputObj);
+	void addPredicatesInput(const std::list<Predicate*> &inputPreds) {
+		for (Predicate *inputPred : inputPreds)
+			addPredicateInput(inputPred);
 	}
 
     /*

@@ -10,7 +10,7 @@ namespace embasp {
 
 class Predicate {
 public:
-	Predicate(std::string name): name(name) { }
+	Predicate(const std::string &name): name(name) { }
 
 	inline std::string getName() { return name; }
 
@@ -19,7 +19,7 @@ public:
 		return *std::any_cast<T*>(arguments.at(pos));
 	}
 
-	virtual void initPredicate(std::vector<std::string> predicateArguments) = 0;
+	virtual void initPredicate(const std::vector<std::string> &predicateArguments) = 0;
 
 	virtual std::vector<std::string> listArguments() { return std::vector<std::string>(); };
 

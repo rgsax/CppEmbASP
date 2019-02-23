@@ -32,7 +32,7 @@ Remeber to register your new class if you want to retrieve some possible atoms f
 ```cpp
 class Example : public embasp::Fact {
 public:
-	Example(): Predicate("fact_name") {  }
+	Example(): Fact("fact_name") {  }
 };
 
 /*

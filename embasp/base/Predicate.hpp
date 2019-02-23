@@ -21,7 +21,7 @@ public:
 
 	virtual void initPredicate(const std::vector<std::string> &predicateArguments) = 0;
 
-	virtual std::vector<std::string> listArguments() { return std::vector<std::string>(); };
+	virtual std::vector<std::string> listArguments() = 0;
 
 	virtual ~Predicate() { }
 
@@ -36,6 +36,18 @@ protected:
 private:
 	std::unordered_map<int, std::any> arguments;
 	std::string name;
+};
+
+class Fact : public Predicate {
+public:
+	Fact(const std::string &name): Predicate(name) { }
+
+	void initPredicate(const std::vector<std::string> &predicateArguments) override final {	}
+
+	std::vector<std::string> listArguments() override final { return std::vector<std::string>(); }
+
+protected:
+	void initPredicate() override final { }
 };
 
 #endif

@@ -1,29 +1,20 @@
 #ifndef EXAMPLES_HPP
 #define EXAMPLES_HPP
 
-#include "base/Predicate.hpp"
+#include "embasp/base/Predicate.hpp"
 
 using std::string;
 using std::stoi;
 using std::to_string;
 using std::vector;
 
-class Example : public embasp::Predicate {
+class Example : public embasp::Fact {
 public:
-	Example(): Predicate("embaspFunziona") {
-		initPredicate();
-	}
-
-	void initPredicate(const vector<string> &predicateArguments) override {
-		initPredicate();
-	}
+	Example(): Fact("embaspFunziona") { }
 
 	string toString() {
 		return "Example class";
 	}
-
-protected:
-	void initPredicate() override { }
 };
 
 class ExitCode : public embasp::Predicate {

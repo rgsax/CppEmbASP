@@ -13,6 +13,7 @@ Use the following flags to compile without "undefined reference" problems:
 Use the framework in the same way you use the official EmbASP Java framework.
 
 If you need a predicate with arity = 0 just extend the class **Fact**.
+
 Define all of your predicate (with arity >= 0) classes extending the base class **Predicate**.
 You have to override all of the pure virtual methods defined in Predicate.
 They are:

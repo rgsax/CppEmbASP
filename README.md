@@ -1,5 +1,5 @@
 # EmbASP++
-A C++ porting of the framework for integration of Logic Programming EmbASP
+A C++ porting of the framework for integration of Logic Programming EmbASP  (see [DeMaCS-UNICAL/EmbASP](https://github.com/DeMaCS-UNICAL/EmbASP "DeMaCS-UNICAL/EmbASP"))
 
 - The library uses some C++17 features and the **Boost.Filesystem** and **Boost.Process** libraries; 
 - The library also uses the C++11 thread library;
@@ -10,6 +10,8 @@ Use the following flags to compile without "undefined reference" problems:
     
 ---
 ### Usage
+Use the framework in the same way you use the official EmbASP Java framework.
+
 If you need a predicate with arity = 0 just extend the class **Fact**.
 Define all of your predicate (with arity >= 0) classes extending the base class **Predicate**.
 You have to override all of the pure virtual methods defined in Predicate.

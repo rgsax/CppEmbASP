@@ -44,7 +44,7 @@ public:
     /**
 	 * Start a new process for the exe_path and starts solving
 	 */
-	Output* startSync(const std::list<InputProgram*> &programs, const std::list<OptionDescriptor*> &options) override{
+	OutputSharedPtr startSync(const std::list<InputProgram*> &programs, const std::list<OptionDescriptor*> &options) override{
 		std::string option;
 
 		for (OptionDescriptor *o : options)
@@ -80,20 +80,20 @@ public:
         std::string tmpFile = "";
         std::string stringBuffer = "";
         if (exe_path == "")
-            return new Output("", "Error: executable not found");
+            return OutputSharedPtr(new Output("", "Error: executable not found"));
         stringBuffer += exe_path + " " + option + " " + files_paths;
         if (final_program.length() > 0){
             tmpFile=writeToFile("tmp", final_program);
             stringBuffer += " " + tmpFile;
         }
 
-		#ifdef __unix__        
+		#ifdef __unix__
         	stringBuffer.insert(0, "./");
         #endif
 
         std::cerr<<stringBuffer<<"\n";
-        CmdExecutor *executor = CmdExecutor::getInstance();
-        
+        auto executor = CmdExecutor::getInstance();
+
         executor->execute(stringBuffer);
 
         solverOutput<<executor->getOutputStream()->rdbuf();
@@ -108,7 +108,7 @@ protected:
     std::string exe_path;
     std::string load_from_STDIN_option;
 
-    virtual Output* getOutput(const std::string &output, const std::string &error) = 0;
+    virtual OutputSharedPtr getOutput(const std::string &output, const std::string &error) = 0;
 
     std::string writeToFile(const std::string &pFilename, const std::string &sb) {
 	    std::string tmpDir = boost::filesystem::temp_directory_path().string();

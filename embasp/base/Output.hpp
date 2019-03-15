@@ -1,4 +1,5 @@
 #include <string>
+#include <memory>
 
 namespace embasp {
 
@@ -28,6 +29,8 @@ protected:
 	/* The errors thrown by the solver */
     std::string errors = "";
 };
+
+typedef std::shared_ptr<Output> OutputSharedPtr;
 
 #endif // OUTPUT_H
 

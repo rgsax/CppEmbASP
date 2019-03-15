@@ -11,7 +11,7 @@ namespace embasp {
 class Callback
 {
 public:
-    virtual void callback(Output *o) const = 0;
+    virtual void callback(OutputSharedPtr o) const = 0;
     virtual ~Callback() { }
 };
 

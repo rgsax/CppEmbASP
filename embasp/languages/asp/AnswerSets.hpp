@@ -16,7 +16,7 @@ public:
 
 	AnswerSets(const std::string &out, const std::string &err): Output(out, err) { }
 
-	std::list<AnswerSet*> getAnswersets() {
+	std::list<AnswerSetSharedPtr> getAnswersets() {
 		if (answersets.empty()) {
 			parse();
 		}
@@ -31,7 +31,7 @@ public:
     virtual ~AnswerSets() {}
 
 protected:
-    std::list<AnswerSet*> answersets;
+    std::list<AnswerSetSharedPtr> answersets;
 };
 
 #endif // ANSWERSETS_H

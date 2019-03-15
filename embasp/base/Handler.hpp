@@ -110,7 +110,7 @@ public:
 	 */
 	virtual void startAsync(Callback *c, const std::list<int> &program_index, const std::list<int> &option_index) { }
 
-	virtual Output* startSync() {
+	virtual OutputSharedPtr startSync() {
 		return startSync(std::list<int>(), std::list<int>());
     }
 
@@ -118,8 +118,8 @@ public:
 	 * This method have to be implemented by subclasses to execute solver in a synchronous way, if no parameters are given
 	 * the entire lists of programs and option are used
 	 */
-	virtual Output* startSync(const std::list<int> &program_index, const std::list<int> &option_index) {
-		return nullptr;
+	virtual OutputSharedPtr startSync(const std::list<int> &program_index, const std::list<int> &option_index) {
+		return OutputSharedPtr(nullptr);
     }
 
     virtual ~Handler() { }

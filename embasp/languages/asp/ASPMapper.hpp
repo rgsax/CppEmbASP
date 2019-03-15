@@ -1,4 +1,5 @@
 #include <exception>
+#include <memory>
 #include "../../base/Type.hpp"
 
 namespace embasp {
@@ -9,9 +10,9 @@ namespace embasp {
 class ASPMapper {
 public:
 
-	static ASPMapper* getInstance() {
+	static std::shared_ptr<ASPMapper> getInstance() {
 		if(instance == nullptr) {
-			instance = new ASPMapper();
+			instance = std::make_shared<ASPMapper>();
 		}
 
 		return instance;
@@ -19,18 +20,16 @@ public:
 
 	template<typename T>
 	void registerPredicateType() {
-		_Type *type = new Type<T>;
-		Predicate *obj = type->newInstance();
+		std::shared_ptr<_Type> type = std::make_shared<Type<T>>();
+		PredicateSharedPtr obj = type->newInstance();
 
 		registeredTypes.insert_or_assign(obj->getName(), type);
-
-		delete obj;
 	}
 
-	Predicate* getPredicate(const std::string &predicate) {
+	PredicateSharedPtr getPredicate(const std::string &predicate) {
 		std::string name = predicate.substr(0, predicate.find("("));
 
-		_Type *type = nullptr;
+		std::shared_ptr<_Type> type = nullptr;
 
 		try{
 			type = registeredTypes.at(name);
@@ -50,36 +49,31 @@ public:
 
 		args.push_back(arguments);
 
-		Predicate *obj = type->newInstance();
+		PredicateSharedPtr obj = type->newInstance();
 		obj->initPredicate(args);
 
 		return obj;
 	}
 
-	std::unordered_map<std::string, _Type*> getRegisteredTypes() {
+	std::unordered_map<std::string, std::shared_ptr<_Type>> getRegisteredTypes() {
 		return registeredTypes;
 	}
 
 	template<typename T>
 	void unregisterPredicateType() {
-		_Type *type = new Type<T>;
-		Predicate *obj = type->newInstance();
+		std::shared_ptr<_Type> type = std::make_shared<Type<T>>();
+		PredicateSharedPtr obj = type->newInstance();
 
 		registeredTypes.erase(obj->getName());
-
-		delete obj;
-		delete type;
 	}
 
 	template<typename T>
 	bool isRegistered() {
-		_Type *type = new Type<T>;
-		Predicate *obj = type->newInstance();
+		std::shared_ptr<_Type> type = std::make_shared<Type<T>>();
+		PredicateSharedPtr obj = type->newInstance();
 
 		bool registered = registeredTypes.find(obj->getName()) != registeredTypes.end();
 
-		delete obj;
-		delete type;
 		return registered;
 	}
 
@@ -104,11 +98,11 @@ public:
 	}
 
 private:
-	static ASPMapper *instance;
-	std::unordered_map<std::string, _Type*> registeredTypes;
+	static std::shared_ptr<ASPMapper> instance;
+	std::unordered_map<std::string, std::shared_ptr<_Type>> registeredTypes;
 };
 
-ASPMapper* ASPMapper::instance = nullptr;
+std::shared_ptr<ASPMapper> ASPMapper::instance = std::shared_ptr<ASPMapper>(nullptr);
 
 #endif
 

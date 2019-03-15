@@ -36,11 +36,11 @@ public:
 	/*
 	 * Return atoms stored in atoms
 	 */
-	std::list<Predicate*> getAtoms() {
+	std::list<PredicateSharedPtr> getAtoms() {
 		if (atoms.empty()) {
-			ASPMapper *mapper = ASPMapper::getInstance();
+			auto mapper = ASPMapper::getInstance();
 			for (const std::string &atom : value) {
-				Predicate *obj = mapper->getPredicate(atom);
+				PredicateSharedPtr obj = mapper->getPredicate(atom);
 
 				atoms.push_back(obj);
 			}
@@ -74,8 +74,10 @@ private:
 	/* where weights of the answer set are stored */
 	std::unordered_map<int, int> weight_map;
 	/* where Answer set's atoms are stored */
-    std::list<Predicate*> atoms;
+    std::list<PredicateSharedPtr> atoms;
 };
+
+typedef std::shared_ptr<AnswerSet> AnswerSetSharedPtr;
 
 #endif // ANSWERSET_H
 

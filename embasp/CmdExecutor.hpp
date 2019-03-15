@@ -6,6 +6,7 @@
  */
 
 #include <boost/process.hpp>
+#include <memory>
 #include <stdexcept>
 #include <iostream>
 
@@ -13,14 +14,14 @@ namespace boost_process = boost::process;
 
 class CmdExecutor {
 public:
-	static CmdExecutor* getInstance() {
+	static std::shared_ptr<CmdExecutor> getInstance() {
 		if(instance == nullptr)
-			instance = new CmdExecutor();
+			instance = std::make_shared<CmdExecutor>();
 
 		return instance;
 	}
 
-	int execute(const std::string &command) {		
+	int execute(const std::string &command) {
 		boost_process::ipstream *out = new boost_process::ipstream;
 		boost_process::ipstream *err = new boost_process::ipstream;
 
@@ -55,13 +56,13 @@ public:
 	}
 
 private:
-	static CmdExecutor *instance;
+	static std::shared_ptr<CmdExecutor> instance;
 
     std::istream *output_stream = nullptr;
     std::istream *error_output_stream = nullptr;
 
 };
 
-CmdExecutor* CmdExecutor::instance = nullptr;
+std::shared_ptr<CmdExecutor> CmdExecutor::instance = std::shared_ptr<CmdExecutor>(nullptr);
 
 #endif

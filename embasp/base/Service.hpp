@@ -20,7 +20,7 @@ public:
     /*
 	 * Starts ASP solving Syncronously on a subset of data and options.
 	 */
-    virtual Output* startSync(const std::list<InputProgram*> &programs, const std::list<OptionDescriptor*> &options) = 0;
+    virtual OutputSharedPtr startSync(const std::list<InputProgram*> &programs, const std::list<OptionDescriptor*> &options) = 0;
 
     virtual ~Service() {}
 };

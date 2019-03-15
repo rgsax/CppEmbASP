@@ -8,8 +8,8 @@ using namespace embasp;
 
 class MyASPCallback : public Callback {
 public:
-	void callback(Output *output) const override {
-		AnswerSets *answerSets = dynamic_cast<AnswerSets*>(output);
+	void callback(OutputSharedPtr output) const override {
+		auto answerSets = dynamic_cast<AnswerSets*>(output.get());
 
 		for(auto answerSet : answerSets->getAnswersets()) {
 			for(auto atom : answerSet->getAtoms()) {
@@ -17,7 +17,7 @@ public:
 					if(typeid(*atom) == typeid(Example))
 						cout<<"embasp funziona!!\n";
 					else if(typeid(*atom) == typeid(ExitCode))
-						cout<<dynamic_cast<ExitCode*>(atom)->toString()<<"\n";
+						cout<<dynamic_cast<ExitCode*>(atom.get())->toString()<<"\n";
 				}
 			}
 		}
@@ -32,11 +32,12 @@ int main() {
 	InputProgram *program = new ASPInputProgram();
 
 	program->addFilesPath("prova");
-	program->addPredicateInput(new ExitCode(0));
+	ExitCode *code = new ExitCode(0);
+	program->addPredicateInput(code);
 	program->addProgram("exit_code(1).");
 	handler.addProgram(program);
 
-	ASPMapper *mapper = ASPMapper::getInstance();
+	auto mapper = ASPMapper::getInstance();
 
 	mapper->registerPredicateType<Example>();
 	mapper->registerPredicateType<ExitCode>();
@@ -45,6 +46,7 @@ int main() {
 
 	handler.startAsync(myASPCallback);
 
+	delete code;
 	delete myASPCallback;
 	delete program;
 	delete desktopService;

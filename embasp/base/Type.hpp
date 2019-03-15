@@ -7,7 +7,7 @@ namespace embasp {
 
 class _Type {
 public:
-	virtual Predicate* newInstance() const {
+	virtual PredicateSharedPtr newInstance() const {
 		return nullptr;
 	}
 };
@@ -16,8 +16,8 @@ template<typename T>
 class Type : public _Type{
 
 public:
-	Predicate* newInstance() const override {
-		return new T();
+	PredicateSharedPtr newInstance() const override {
+		return std::make_shared<T>();
 	}
 };
 

@@ -69,10 +69,10 @@ protected:
 				size_t delimIndex = s.find("@");
 				weightMap.insert_or_assign(std::stoi(s.substr(delimIndex + 1)), std::stoi(s.substr(0, delimIndex)));
 
-				answersets.push_back(new AnswerSet(answerSetList, weightMap));
+				answersets.push_back(AnswerSetSharedPtr(new AnswerSet(answerSetList, weightMap)));
 
 			} else
-				answersets.push_back(new AnswerSet(answerSetList));
+				answersets.push_back(AnswerSetSharedPtr(new AnswerSet(answerSetList)));
 			matcher_it++;
 		}
 

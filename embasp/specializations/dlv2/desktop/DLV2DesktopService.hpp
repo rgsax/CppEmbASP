@@ -18,7 +18,7 @@ public:
 		DesktopService::startAsync(callback, programs, options);
     }
 
-    Output* startSync(const std::list<InputProgram*> &programs, const std::list<OptionDescriptor*> &options) override{
+    OutputSharedPtr startSync(const std::list<InputProgram*> &programs, const std::list<OptionDescriptor*> &options) override{
 		std::list<OptionDescriptor*> final_options(options);
 		final_options.push_back(competitionOutput);
 		return DesktopService::startSync(programs, final_options);
@@ -29,10 +29,10 @@ public:
     }
 
 protected:
-    Output* getOutput(const std::string &output, const std::string &error) override{
+    OutputSharedPtr getOutput(const std::string &output, const std::string &error) override{
 		if(!error.empty())
 			std::cerr<<"Some error occured during execution\n";
-		return new DLV2AnswerSets(output, error);
+		return std::shared_ptr<DLV2AnswerSets>(new DLV2AnswerSets(output, error));
 }
 
 private:

@@ -1,4 +1,5 @@
 #include <any>
+#include <memory>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -49,6 +50,8 @@ public:
 protected:
 	void initPredicate() override final { }
 };
+
+typedef std::shared_ptr<Predicate> PredicateSharedPtr;
 
 #endif
 

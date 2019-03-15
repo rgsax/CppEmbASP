@@ -25,11 +25,11 @@ public:
 		startAsync(c, std::list<int>(), std::list<int>());
 	}
 
-	Output* startSync() override {
+	OutputSharedPtr startSync() override {
 		return Handler::startSync();
 	}
 
-    Output* startSync(const std::list<int> &program_index, const std::list<int> &option_index) override{
+    OutputSharedPtr startSync(const std::list<int> &program_index, const std::list<int> &option_index) override{
 		std::list<InputProgram*> input_programs = collect_programs(program_index);
 		std::list<OptionDescriptor*> input_options = collect_options(option_index);
 

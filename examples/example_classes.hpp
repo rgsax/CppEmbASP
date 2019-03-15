@@ -1,7 +1,7 @@
 #ifndef EXAMPLES_HPP
 #define EXAMPLES_HPP
 
-#include "embasp/base/Predicate.hpp"
+#include "../embasp/base/Predicate.hpp"
 
 using std::string;
 using std::stoi;

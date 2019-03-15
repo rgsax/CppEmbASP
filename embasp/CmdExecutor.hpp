@@ -7,6 +7,7 @@
 
 #include <boost/process.hpp>
 #include <stdexcept>
+#include <iostream>
 
 namespace boost_process = boost::process;
 
@@ -19,7 +20,7 @@ public:
 		return instance;
 	}
 
-	int execute(const std::string &command) {
+	int execute(const std::string &command) {		
 		boost_process::ipstream *out = new boost_process::ipstream;
 		boost_process::ipstream *err = new boost_process::ipstream;
 

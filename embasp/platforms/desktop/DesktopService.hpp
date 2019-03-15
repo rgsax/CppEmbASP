@@ -87,8 +87,13 @@ public:
             stringBuffer += " " + tmpFile;
         }
 
+		#ifdef __unix__        
+        	stringBuffer.insert(0, "./");
+        #endif
+
         std::cerr<<stringBuffer<<"\n";
         CmdExecutor *executor = CmdExecutor::getInstance();
+        
         executor->execute(stringBuffer);
 
         solverOutput<<executor->getOutputStream()->rdbuf();

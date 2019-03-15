@@ -1,5 +1,5 @@
-#include "embasp/platforms/desktop/DesktopHandler.hpp"
-#include "embasp/specializations/dlv2.hpp"
+#include "../embasp/platforms/desktop/DesktopHandler.hpp"
+#include "../embasp/specializations/dlv2.hpp"
 #include "example_classes.hpp"
 #include <iostream>
 
@@ -7,8 +7,8 @@ using namespace std;
 using namespace embasp;
 
 int main() {
-
-    DesktopHandler handler(new DLV2DesktopService("./dlv2"));
+	DesktopService *desktopService = new DLV2DesktopService("dlv2");
+    DesktopHandler handler(desktopService);
 	InputProgram *program = new ASPInputProgram();
 
 	program->addFilesPath("prova");
@@ -34,4 +34,7 @@ int main() {
 			}
 		}
 	}
+	
+	delete program;
+	delete desktopService;
 }

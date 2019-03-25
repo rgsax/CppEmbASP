@@ -19,7 +19,7 @@ You have to override all of the pure virtual methods defined in Predicate.
 They are:
 - void initPredicate(): Add the predicate arguments here with the addArgument method;
 - void initPredicate(const std::vector&lt;std::string&gt; &predicateArguments):  parse the values of the predicate from a vector of strings and call the initPredicate method;
-- std::vector&lt;std::string&gt;listArguments(): put the arguments of te predicate in form of string into a vector and return it;
+- std::vector&lt;std::string&gt;listArguments(): put the arguments of the predicate in form of string into a vector and return it;
 
 To add arguments use the `void addArgument<T>(int pos, T *argument)` template method.
 

@@ -34,7 +34,7 @@ public:
 	}
 
 	/*
-	 * Return atoms stored in atoms
+	 * Return atoms stored in answer sets
 	 */
 	std::list<PredicateSharedPtr> getAtoms() {
 		if (atoms.empty()) {
